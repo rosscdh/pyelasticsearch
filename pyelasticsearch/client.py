@@ -19,7 +19,6 @@ except ImportError:
 
 import requests
 import json
-from simplejson import JSONDecodeError
 
 from pyelasticsearch.downtime import DowntimePronePool
 from pyelasticsearch.exceptions import (Timeout, ConnectionError,
@@ -271,13 +270,13 @@ class ElasticSearch(object):
         """
         Convert a Python value to a form suitable for ElasticSearch's JSON DSL.
         """
-        return json.dumps(value, cls=self.json_encoder)
+        return json.dumps(value, cls=self.json_encoder, use_decimal=True)
 
     def _decode_response(self, response):
         """Return a native-Python representation of a response's JSON blob."""
         try:
             json_response = response.json()
-        except JSONDecodeError:
+        except:
             raise InvalidJsonResponseError(response)
         return json_response
 
