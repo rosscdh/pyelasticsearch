@@ -18,7 +18,7 @@ except ImportError:
     from urllib import urlencode, quote_plus
 
 import requests
-import simplejson as json  # for use_decimal
+import json
 from simplejson import JSONDecodeError
 
 from pyelasticsearch.downtime import DowntimePronePool
@@ -271,7 +271,7 @@ class ElasticSearch(object):
         """
         Convert a Python value to a form suitable for ElasticSearch's JSON DSL.
         """
-        return json.dumps(value, cls=self.json_encoder, use_decimal=True)
+        return json.dumps(value, cls=self.json_encoder)
 
     def _decode_response(self, response):
         """Return a native-Python representation of a response's JSON blob."""
